@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {
     View,
     Text,
-    StyleSheet
+    StyleSheet,
+    Button
 } from 'react-native';
 
 import PropTypes from 'prop-types';
@@ -10,11 +11,12 @@ import { connect } from 'react-redux';
 
 
 
-const BigPlayer = () => (
+const BigPlayer = ({ mountedTrack, play }) => (
     <View  style={styles.container}>
-        <Text>
-            Tämä on se iso soitin
-        </Text>
+        <Button
+            title={'Play ' + mountedTrack}
+            onPress={() => play(mountedTrack)}
+        />
     </View>
 ) 
 
@@ -27,4 +29,13 @@ const styles = StyleSheet.create({
 })
 
 
-export default BigPlayer;
+const mapStateToProps = state => ({
+    mountedTrack: state.mountSong
+})
+
+const mapDispatchToProps = dispatch => ({
+    play: (newSong) => dispatch({ type: 'SET_NOW_PLAYING', nowPlaying: newSong }),
+})
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(BigPlayer);

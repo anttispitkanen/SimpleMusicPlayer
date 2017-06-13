@@ -1,0 +1,13 @@
+TODOS:
+
+* Player logic
+    * Where to initiate the player?
+
+* 
+
+
+
+
+
+DONES:
+

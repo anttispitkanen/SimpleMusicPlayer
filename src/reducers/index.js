@@ -84,8 +84,21 @@ const allTracks = (state = tracks, action) => {
     return state;
 }
 
+export const mountSong = (state = null, action) => {
+    switch (action.type) {
+        case 'MOUNT_SONG':
+            if (action.newSong) {
+                return action.newSong;
+            } else {
+                return state;
+            }
 
-const nowPlaying = (state = null, action) => {
+        default:
+            return state;
+    }
+}
+
+export const nowPlaying = (state = null, action) => {
     switch (action.type) {
         case 'GET_NOW_PLAYING':
             return state;
@@ -108,7 +121,8 @@ const AppReducer = combineReducers({
     // auth,
     test,
     allTracks,
-    nowPlaying
+    nowPlaying,
+    mountSong
 });
 
 export default AppReducer;

@@ -8,11 +8,12 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { NavigationActions } from 'react-navigation';
 
 
-const ListSingleTrack = ({ name, imgSrc, play }) => (
+const ListSingleTrack = ({ name, imgSrc, play, openPlayer }) => (
     <TouchableHighlight 
-        onPress={() => { play(name) }}
+        onPress={() => openPlayer(name)}
         style={styles.container}>
         
         <View style={styles.trackInfo}>
@@ -50,7 +51,11 @@ ListSingleTrack.propTypes = {
 
 
 const mapDispatchToProps = (dispatch) => ({
-    play: (newSong) => dispatch({ type: 'SET_NOW_PLAYING', nowPlaying: newSong })
+    play: (newSong) => dispatch({ type: 'SET_NOW_PLAYING', nowPlaying: newSong }),
+    openPlayer: (newSong) => {
+        dispatch({ type: 'MOUNT_SONG', newSong: newSong })
+        dispatch(NavigationActions.navigate({ routeName: 'BigPlayer' }))
+    }
 })
 
 export default connect(null, mapDispatchToProps)(ListSingleTrack);

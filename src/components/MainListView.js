@@ -8,11 +8,14 @@ import { connect } from 'react-redux';
 
 import ListSingleTrack from './ListSingleTrack';
 import MiniPlayer from './MiniPlayer';
+import PlayingTest from './PlayingTest';
 
 
 const MainListView = ({ tracks, nowPlaying }) => (
     <View style={styles.container}>
-        <Text style={styles.heading}>Main list view</Text>
+        <Text style={styles.heading}>Poetkoe player</Text>
+        
+        <PlayingTest />
         
         {tracks.map((track, i) => {
             
@@ -25,8 +28,6 @@ const MainListView = ({ tracks, nowPlaying }) => (
         })}
 
         <MiniPlayer />
-
-
 
     </View>
 );
@@ -58,6 +59,8 @@ const mapStateToProps = state => ({
 
 
 export default connect(mapStateToProps)(MainListView);
+
+
 
 
 {/*return <TestButton title key={i} />*/}
