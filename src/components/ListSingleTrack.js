@@ -11,9 +11,9 @@ import { connect } from 'react-redux';
 import { NavigationActions } from 'react-navigation';
 
 
-const ListSingleTrack = ({ name, imgSrc, play, openPlayer }) => (
+const ListSingleTrack = ({ name, sourceFile, imgSrc, play, openPlayer }) => (
     <TouchableHighlight 
-        onPress={() => openPlayer(name)}
+        onPress={() => openPlayer({name, sourceFile, imgSrc})}
         style={styles.container}>
         
         <View style={styles.trackInfo}>
@@ -59,3 +59,5 @@ const mapDispatchToProps = (dispatch) => ({
 })
 
 export default connect(null, mapDispatchToProps)(ListSingleTrack);
+
+// onPress={() => openPlayer(name)}

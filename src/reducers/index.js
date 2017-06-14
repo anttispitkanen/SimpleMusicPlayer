@@ -5,37 +5,17 @@ import { AppNavigator } from '../navigators/AppNavigator';
 
 import { tracks } from '../tracks';
 
-// Start with two routes: The Main screen, with the Login screen on top.
-// const firstAction = AppNavigator.router.getActionForPathAndParams('Main');
-// const tempNavState = AppNavigator.router.getStateForAction(firstAction);
-// const secondAction = AppNavigator.router.getActionForPathAndParams('Login');
-// const initialNavState = AppNavigator.router.getStateForAction(
-//   secondAction,
-//   tempNavState
-// );
 
-// function nav(state = initialNavState, action) {
 function nav(state = null, action) {
     let nextState;
     switch (action.type) {
-    case 'Login':
-            nextState = AppNavigator.router.getStateForAction(
-                NavigationActions.back(),
-                state
-            );
-            break;
-        case 'Logout':
-            nextState = AppNavigator.router.getStateForAction(
-                NavigationActions.navigate({ routeName: 'Login' }),
-                state
-            );
-            break;
-
+       
         case 'BigPlayer':
             nextState = AppNavigator.router.getStateForAction(
                 NavigationActions.navigate({ routeName: 'BigPlayer '}),
                 state
             )
+            break;
 
         default:
             nextState = AppNavigator.router.getStateForAction(action, state);
@@ -46,83 +26,106 @@ function nav(state = null, action) {
   return nextState || state;
 }
 
-// const initialAuthState = { isLoggedIn: false };
-// const initialAuthState = { isLoggedIn: true };
-
-// function auth(state = initialAuthState, action) {
-//   switch (action.type) {
-//     case 'Login':
-//       return { ...state, isLoggedIn: true };
-//     case 'Logout':
-//       return { ...state, isLoggedIn: false };
-//     default:
-//       return state;
-//   }
+// const initialState = {
+//     tracks: tracks,
+//     playingTrack: null
 // }
 
+const STOPPED = 'STOPPED';
+const PAUSED = 'PAUSED';
+const PLAYING = 'PLAYING';
 
-const test = (state = 0, action) => {
-    // let message;
-    switch (action.type) {
-        case 'changeMessage':
-            // return 'kukkuu';
-            return action.message;
-    
-        default:
-            return 'initialMessage';
-    }
-    // return (message && message.length > 0) ? message : "initialmessage";
+const initPlayingTrack = {
+    track: null, // the Sound object
+    name: null,
+    sourceFile: null,
+    imgSrc: null,
+    playstate: null
 }
 
-// function test(state = null, message = "jeejee") {
-//     return (message && message.length > 0) ? message : "initialmessage";
-// }
+export const player = (state = initPlayingTrack, action) => {
+    switch (action.type) {
 
+        case 'SET_PLAYING_TRACK':
+            return {...action.newPlayingTrack, playstate: 'STOPPED'};
+
+        case 'GET_PLAYING_TRACK':
+            return state;
+
+
+        case 'PLAY':
+            if (state.track) {
+                return {...state, playstate: PLAYING};
+            }
+            return state;
+
+        case 'PAUSE':
+            if (state.track) {
+                return {...state, playstate: PAUSED};
+            }
+            return state;
+
+        case 'STOP':
+            if (state.track) {
+                return {...state, playstate: STOPPED};
+            }
+            return state;
+
+        default:
+            return state;
+    }
+}
 
 
 const allTracks = (state = tracks, action) => {
     return state;
 }
 
-export const mountSong = (state = null, action) => {
-    switch (action.type) {
-        case 'MOUNT_SONG':
-            if (action.newSong) {
-                return action.newSong;
-            } else {
-                return state;
-            }
 
-        default:
-            return state;
-    }
-}
+// export const mountSong = (state = null, action) => {
+//     switch (action.type) {
+//         case 'MOUNT_SONG':
+//             if (action.newSong) {
+//                 return action.newSong;
+//             } else {
+//                 return state;
+//             }
 
-export const nowPlaying = (state = null, action) => {
-    switch (action.type) {
-        case 'GET_NOW_PLAYING':
-            return state;
+//         default:
+//             return state;
+//     }
+// }
 
-        case 'SET_NOW_PLAYING':
-            return action.nowPlaying;
 
-        case 'STOP':
-            return null;
+// export const nowPlaying = (state = null, action) => {
     
-        default:
-            return state;
-    }
-}
+//     switch (action.type) {
+//         case 'GET_NOW_PLAYING':
+//             return state;
+
+//         case 'SET_NOW_PLAYING':
+//             return action.nowPlaying;
+
+//         case 'PAUSE':
+//             return 'paused'; // TESTING TESTING
+
+//         case 'STOP':
+//             return null;
+    
+//         default:
+//             return state;
+//     }
+// }
+
 
 
 
 const AppReducer = combineReducers({
     nav,
-    // auth,
-    test,
+    player,
     allTracks,
-    nowPlaying,
-    mountSong
+    // nowPlaying,
+    // mountSong
 });
 
 export default AppReducer;

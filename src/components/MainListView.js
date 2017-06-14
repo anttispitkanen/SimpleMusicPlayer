@@ -15,14 +15,12 @@ const MainListView = ({ tracks, nowPlaying }) => (
     <View style={styles.container}>
         <Text style={styles.heading}>Poetkoe player</Text>
         
-        <PlayingTest />
-        
         {tracks.map((track, i) => {
             
             return (
                 <ListSingleTrack 
                     {...track}
-                    key={i} 
+                    key={track.name} 
                 />
             )
         })}
@@ -40,8 +38,6 @@ MainListView.navigationOptions = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // justifyContent: 'flex-start',
-        // alignItems: 'center',
     },
     heading: {
         fontSize: 20,
@@ -59,15 +55,3 @@ const mapStateToProps = state => ({
 
 
 export default connect(mapStateToProps)(MainListView);
-
-
-
-
-{/*return <TestButton title key={i} />*/}
-{/*return <Text key={i}>{track.name}</Text>*/}
-
-{/*<Button
-    key={i} 
-    title={track.name}
-    onPress={() => alert(track.name)}
-/>*/}
