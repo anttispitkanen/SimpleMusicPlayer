@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        borderTopColor: 'red',
+        borderTopColor: '#b3b3b3',
         borderTopWidth: 1
     },
     img: {
