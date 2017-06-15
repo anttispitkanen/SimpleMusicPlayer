@@ -1,17 +1,21 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button } from 'react-native';
+import { StyleSheet, View, Text, Button, Image } from 'react-native';
 
 import { connect } from 'react-redux';
 
 import ListSingleTrack from './ListSingleTrack';
-import MiniPlayer from './MiniPlayer';
 
+import MiniPlayerContainer from './MiniPlayer/MiniPlayerContainer';
 
 const MainListView = ({ tracks, nowPlaying }) => (
     <View style={styles.container}>
-        <Text style={styles.heading}>Poetkoe player</Text>
-        
-        {tracks.map((track, i) => {
+        {/*<Text style={styles.heading}>Poetkoe player</Text>*/}
+        <View style={styles.logoContainer}>
+            <Image source={require('../../static/images/poetkoe-logo.png')} style={styles.mainLogo} />
+        </View>
+
+
+        {tracks.map((track) => {
             
             return (
                 <ListSingleTrack 
@@ -21,7 +25,7 @@ const MainListView = ({ tracks, nowPlaying }) => (
             )
         })}
 
-        <MiniPlayer />
+        <MiniPlayerContainer />
 
     </View>
 );
@@ -40,6 +44,18 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         marginTop: 30,
         textAlign: 'center'
+    },
+    logoContainer: {
+        height: 100,
+        backgroundColor: '#E2C627',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    mainLogo: {
+        marginTop: 10,
+        height: 60,
+        // width: 100,
+        resizeMode: 'contain'
     }
 });
 

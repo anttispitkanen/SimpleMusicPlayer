@@ -3,10 +3,14 @@ import {
     View,
     Text,
     Button,
-    StyleSheet
+    StyleSheet,
+    TouchableHighlight
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 const MiniPlayer = ({ stop, pause, play, player }) => (
 
@@ -16,29 +20,45 @@ const MiniPlayer = ({ stop, pause, play, player }) => (
             {!player.name ? 'Select a track to play' : 'Now playing ' + player.name}
         </Text>
 
-        <Button 
-            title="play"
+        <TouchableHighlight
+            underlayColor="rgba(0,0,0,0)"
             onPress={() => {
-                if (player.track) { 
-                    player.track.play() 
+                if (player.track) {
+                    player.track.play();
                     play();
-                };
+                }
             }}
-        />
+        >
+            <Icon name="play" size={20} />
+        </TouchableHighlight>
 
         {/*disabled={!mountedTrack}*/}
 
-        <Button
-            title="pause"
+        <TouchableHighlight
+            underlayColor="rgba(0,0,0,0)"
             onPress={() => {
-                if (player.track) { 
-                    player.track.pause(); 
+                if (player.track) {
+                    player.track.pause();
                     pause();
-                };
+                }
             }}
-        />
+        >
+            <Icon name="pause" size={20} />
+        </TouchableHighlight>
 
-        <Button 
+        <TouchableHighlight
+            underlayColor="rgba(0,0,0,0)"
+            onPress={() => {
+                if (player.track) {
+                    player.track.stop();
+                    stop();
+                }
+            }}
+        >
+            <Icon name="stop" size={20} />
+        </TouchableHighlight>
+
+        {/*<Button 
             title="stop"
             onPress={() => {
                 if (player.track) {
@@ -46,7 +66,7 @@ const MiniPlayer = ({ stop, pause, play, player }) => (
                     stop();
                 }
             }}
-        />
+        />*/}
     </View>
 )
 

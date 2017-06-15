@@ -9,6 +9,11 @@ TODOS:
 
 * Playlists/albums?
 
+* Cool player UI with icons
+
+* Play queue
+    * Skipping tracks
+
 
 
 DONES:
