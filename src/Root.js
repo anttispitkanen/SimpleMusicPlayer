@@ -18,22 +18,6 @@ import AppWithNavigationState from './navigators/AppNavigator';
 import store from './reducers';
 
 
-// const mapStateToProps = (state) => ({
-//     nav: state.nav
-// })
-
-
-/*
-export default class Root extends Component {
-    render() {
-        return (
-            <Provider store={store}>
-                <AppWithNavigationState />
-            </Provider>
-        )
-    }
-}
-*/
 
 
 export default class Root extends Component {
@@ -46,6 +30,3 @@ export default class Root extends Component {
     }
 }
 
-{/*<View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <Text>jee</Text>
-            </View>*/}

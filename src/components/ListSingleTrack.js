@@ -46,18 +46,16 @@ const styles = StyleSheet.create({
 ListSingleTrack.propTypes = {
     name: PropTypes.string.isRequired,
     imgSrc: PropTypes.string.isRequired,
-    play: PropTypes.func.isRequired
+
 }
 
 
 const mapDispatchToProps = (dispatch) => ({
-    play: (newSong) => dispatch({ type: 'SET_NOW_PLAYING', nowPlaying: newSong }),
-    openPlayer: (newSong) => {
-        dispatch({ type: 'MOUNT_SONG', newSong: newSong })
-        dispatch(NavigationActions.navigate({ routeName: 'BigPlayer' }))
+
+    openPlayer: (track) => {
+        dispatch({ type: 'PREVIEW_TRACK', previewTrack: track });
+        dispatch(NavigationActions.navigate({ routeName: 'BigPlayer' }));
     }
 })
 
 export default connect(null, mapDispatchToProps)(ListSingleTrack);
-
-// onPress={() => openPlayer(name)}

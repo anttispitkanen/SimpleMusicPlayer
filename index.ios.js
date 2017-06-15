@@ -12,12 +12,13 @@ import { createStore } from 'redux';
 import AppReducer from './src/reducers';
 import AppWithNavigationState from './src/navigators/AppNavigator';
 
+const store = createStore(AppReducer);
+
 class ReduxExampleApp extends Component {
-    store = createStore(AppReducer);
 
     render() {
         return (
-            <Provider store={this.store}>
+            <Provider store={store}>
                 <AppWithNavigationState />
             </Provider>
         )

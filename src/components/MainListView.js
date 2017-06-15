@@ -3,12 +3,8 @@ import { StyleSheet, View, Text, Button } from 'react-native';
 
 import { connect } from 'react-redux';
 
-
-// import TestButton from './TestButton';
-
 import ListSingleTrack from './ListSingleTrack';
 import MiniPlayer from './MiniPlayer';
-import PlayingTest from './PlayingTest';
 
 
 const MainListView = ({ tracks, nowPlaying }) => (

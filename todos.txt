@@ -3,9 +3,11 @@ TODOS:
 * Player logic
     * Where to initiate the player?
 
-* 
+* How to manage player state?
 
+* Lock screen and notification bar controls
 
+* Playlists/albums?
 
 
 

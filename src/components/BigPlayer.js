@@ -13,68 +13,55 @@ import { connect } from 'react-redux';
 import Sound from 'react-native-sound';
 
 
-
-/*const BigPlayer = ({ mountedTrack, play }) => (
-    <View  style={styles.container}>
-        <Button
-            title={'Play ' + mountedTrack}
-            onPress={() => play(mountedTrack)}
-        />
-    </View>
-) */
-
-
 export class BigPlayer extends Component {
 
     track = null;
 
     componentDidMount() {
-        console.log(this.props);
         
-
-        this.track = new Sound(this.props.playingTrack.sourceFile, Sound.MAIN_BUNDLE, (error) => {
+        this.track = new Sound(this.props.previewTrack.sourceFile, Sound.MAIN_BUNDLE, (error) => {
             if (error) {
                 alert('mönkään meni');
             }
         })
-
-       
-
         
     }
 
-    play() {
-        this.track.play();
-    }
+    async play() {
+        await this.props.play({
+            ...this.props.previewTrack,
+            track: this.track
+        })
 
-    componentWillUnmount() {
-        this.track.stop();
-        this.track.release();
+        this.props.player.track.play();
+        
     }
 
     render() {
 
-        const { playingTrack, play } = this.props;
+        const { player, previewTrack, play } = this.props;
 
         return (
             <View  style={styles.container}>
                 <Image 
-                    source={{ uri: playingTrack.imgSrc}}
+                    source={{ uri: previewTrack.imgSrc}}
                     style={styles.img}
                 />
 
                 <Button
-                    title={'Play ' + playingTrack.name}
+                    title={'Play ' + previewTrack.name}
                     onPress={() => {
-                        {/*play({mountedTrack, track: this.track});*/}
+                        if (player.track && player.name !== previewTrack.name) { 
+                            // release previous playing track
+                            player.track.release() 
+                            console.log('releasing ' + player.name);
+                            
+                        };
                         this.play();
+
                     }}
                 />
 
-                {/*<Button
-                    title="testplay"
-                    onPress={() => this.track.play()}
-                />*/}
             </View>
         )
     }
@@ -95,14 +82,13 @@ const styles = StyleSheet.create({
 
 
 const mapStateToProps = state => ({
-    // mountedTrack: state.mountSong,
-    playingTrack: state.player
+    previewTrack: state.previewTrack,
+    player: state.player
 })
 
 const mapDispatchToProps = dispatch => ({
     play: (newSong) => {
-        dispatch({ type: 'SET_NOW_PLAYING', nowPlaying: newSong });
-
+        dispatch({ type: 'SET_PLAYING_TRACK', newPlayingTrack: newSong })
     }
 })
 

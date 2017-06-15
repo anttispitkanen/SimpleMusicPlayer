@@ -26,11 +26,8 @@ function nav(state = null, action) {
   return nextState || state;
 }
 
-// const initialState = {
-//     tracks: tracks,
-//     playingTrack: null
-// }
 
+// playstate constants
 const STOPPED = 'STOPPED';
 const PAUSED = 'PAUSED';
 const PLAYING = 'PLAYING';
@@ -44,6 +41,7 @@ const initPlayingTrack = {
 }
 
 export const player = (state = initPlayingTrack, action) => {
+    
     switch (action.type) {
 
         case 'SET_PLAYING_TRACK':
@@ -76,56 +74,28 @@ export const player = (state = initPlayingTrack, action) => {
     }
 }
 
+export const previewTrack = (state = initPlayingTrack, action) => {
+    switch (action.type) {
+
+        case 'PREVIEW_TRACK':
+            return {...state, ...action.previewTrack}
+
+        default:
+            return state;
+    }
+}
+
 
 const allTracks = (state = tracks, action) => {
     return state;
 }
 
 
-// export const mountSong = (state = null, action) => {
-//     switch (action.type) {
-//         case 'MOUNT_SONG':
-//             if (action.newSong) {
-//                 return action.newSong;
-//             } else {
-//                 return state;
-//             }
-
-//         default:
-//             return state;
-//     }
-// }
-
-
-// export const nowPlaying = (state = null, action) => {
-    
-//     switch (action.type) {
-//         case 'GET_NOW_PLAYING':
-//             return state;
-
-//         case 'SET_NOW_PLAYING':
-//             return action.nowPlaying;
-
-//         case 'PAUSE':
-//             return 'paused'; // TESTING TESTING
-
-//         case 'STOP':
-//             return null;
-    
-//         default:
-//             return state;
-//     }
-// }
-
-
-
-
 const AppReducer = combineReducers({
     nav,
     player,
     allTracks,
-    // nowPlaying,
-    // mountSong
+    previewTrack
 });
 
 export default AppReducer;
