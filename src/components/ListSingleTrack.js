@@ -27,6 +27,8 @@ const ListSingleTrack = ({ name, sourceFile, imgSrc, play, openPlayer }) => (
 const styles = StyleSheet.create({
     container: {
         margin: 1,
+        borderBottomWidth: 1,
+        borderBottomColor: 'rgba(0,0,0,0.1)'
     },
     trackInfo: {
         flexDirection: 'row',
@@ -37,8 +39,8 @@ const styles = StyleSheet.create({
     },
 
     img: {
-        height: 50,
-        width: 50
+        height: 70,
+        width: 70
     }
 
 })

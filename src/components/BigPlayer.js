@@ -54,8 +54,6 @@ export class BigPlayer extends Component {
                         if (player.track && player.name !== previewTrack.name) { 
                             // release previous playing track
                             player.track.release() 
-                            console.log('releasing ' + player.name);
-                            
                         };
                         this.play();
 

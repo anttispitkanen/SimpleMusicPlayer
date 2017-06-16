@@ -20,34 +20,38 @@ import MiniPlayerProgress from './MiniPlayerProgress';
 const poetkoeImgSrc = 'https://i1.sndcdn.com/avatars-000284687259-vg7rsa-t200x200.jpg';
 
 
-const MiniPlayerContainer = ({ stop, pause, play, player }) => (
+const MiniPlayerContainer = ({ stop, pause, play, player }) => {
 
-    <View style={styles.container}>
+    return (
+        <View style={styles.container}>
 
-        <Image 
-            style={styles.img}
-            source={player.imgSrc ? { uri: player.imgSrc } : { uri: poetkoeImgSrc }}
-        />
-
-        <View style={styles.info}>
-
-            <MiniPlayerStatus 
-                player={player}
+            <Image 
+                style={styles.img}
+                source={player.imgSrc ? { uri: player.imgSrc } : { uri: poetkoeImgSrc }}
             />
 
-            <MiniPlayerButtons 
-                stop={stop}
-                pause={pause}
-                play={play}
-                player={player}
-            />
+            <View style={styles.info}>
 
-            <MiniPlayerProgress />
+                <MiniPlayerStatus 
+                    player={player}
+                />
 
+                <MiniPlayerButtons 
+                    stop={stop}
+                    pause={pause}
+                    play={play}
+                    player={player}
+                />
+
+                <MiniPlayerProgress 
+                    player={player}
+                />
+
+            </View>
+            
         </View>
-        
-    </View>
-)
+    )
+}
 
 
 const styles = StyleSheet.create({
