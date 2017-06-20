@@ -10,60 +10,34 @@ import {
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import Sound from 'react-native-sound';
+import Video from 'react-native-video';
+import MusicControl from 'react-native-music-control';
 
 
-export class BigPlayer extends Component {
 
-    track = null;
 
-    componentDidMount() {
-        
-        this.track = new Sound(this.props.previewTrack.sourceFile, Sound.MAIN_BUNDLE, (error) => {
-            if (error) {
-                alert('mönkään meni');
-            }
-        })
-        
-    }
 
-    async play() {
-        await this.props.play({
-            ...this.props.previewTrack,
-            track: this.track
-        })
 
-        this.props.player.track.play();
-        
-    }
+export const BigPlayer = ({ player, previewTrack, play }) => (
+    <View style={styles.container}>
 
-    render() {
+        <Image
+            source={{ uri: previewTrack.imgSrc }}
+            style={styles.img}
+        />
 
-        const { player, previewTrack, play } = this.props;
+        <Button
+            title={'Play ' + previewTrack.name}
+            onPress={() => {
+                if (previewTrack.name !== player.name) {
+                    play(previewTrack);
+                }
+            }}
+        />
 
-        return (
-            <View  style={styles.container}>
-                <Image 
-                    source={{ uri: previewTrack.imgSrc}}
-                    style={styles.img}
-                />
+    </View>
+)
 
-                <Button
-                    title={'Play ' + previewTrack.name}
-                    onPress={() => {
-                        if (player.track && player.name !== previewTrack.name) { 
-                            // release previous playing track
-                            player.track.release() 
-                        };
-                        this.play();
-
-                    }}
-                />
-
-            </View>
-        )
-    }
-}
 
 
 const styles = StyleSheet.create({

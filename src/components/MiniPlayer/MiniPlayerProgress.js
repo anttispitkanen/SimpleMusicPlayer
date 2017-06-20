@@ -7,55 +7,38 @@ import {
 import Slider from 'react-native-slider';
 
 
-export const MiniPlayerProgress = ({ player }) => {
+export const MiniPlayerProgress = ({ player, currentTime, updateCurrentTime }) => {
 
     // just some value to avoid problems with no track being mounted yet
-    const dur = player.track ? player.track.getDuration() : 1;
+    // const dur = player.track ? player.track.getDuration() : 1;
 
-    let cur = 0;
-    if (player.track) {
-        setInterval(() => {
-            player.track.getCurrentTime(time => {
-                cur = time / dur;
-                console.log('nyt mennyt: ' + cur);
-            }) 
-        }, 1000);
-    }
-
-    let i = 0.5;
-    setInterval(() => {
-        i = Math.random();
-        // console.log('nyt i on ' + i)
-    }, 1000);
-    
-    // const getValue = () => {
-    //     if 
+    // let cur = 0;
+    // if (player.track) {
+    //     setInterval(() => {
+    //         player.track.getCurrentTime(time => {
+    //             cur = time / dur;
+    //             console.log('nyt mennyt: ' + cur);
+    //         }) 
+    //     }, 1000);
     // }
+
+
+
+    const duration = player.duration;
 
     return (
         
         <View style={styles.container}>
-            {/*<Text style={{color: 'grey'}}>Tähän se slider :D</Text>*/}
-            {/*value={cur ? cur : 0}*/}
-
-            {/*setInterval(() => {
-                        console.log('jee');
-                        
-                        return
-                    }, 500)*/}
+        
             <Slider 
-                value={
-                    0.3
-                }
+                value={ currentTime / player.duration }
                 style={styles.slider} 
                 minimumTrackTintColor="#E2C627"
                 thumbTintColor="grey"
                 thumbStyle={styles.thumb}
                 trackStyle={styles.track}
-                onValueChange={(value) => {
-                    if (player.track) {
-                        player.track.setCurrentTime(value * dur);
-                    }
+                onSlidingComplete={(value) => {
+                    updateCurrentTime(value * duration)
                 }}
             />
 
@@ -66,8 +49,7 @@ export const MiniPlayerProgress = ({ player }) => {
 
 const styles = StyleSheet.create({
     container: {
-        // backgroundColor: 'lightblue',
-        // alignItems: 'stretch'
+
     },
     slider: {
         width: 200,
@@ -80,7 +62,6 @@ const styles = StyleSheet.create({
         width: 5,
         padding: 0,
         margin: 0
-        // display: 'none'
     },
     track: {
         height: 1,

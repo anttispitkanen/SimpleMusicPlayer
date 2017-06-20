@@ -5,22 +5,110 @@ import {
     Button,
     StyleSheet,
     TouchableHighlight,
-    Image
+    Image,
+    Platform
 } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+import Video from 'react-native-video';
+
+import MusicControl from 'react-native-music-control';
+
 import MiniPlayerStatus from './MiniPlayerStatus';
 import MiniPlayerButtons from './MiniPlayerButtons';
 import MiniPlayerProgress from './MiniPlayerProgress';
 
 
+
 const poetkoeImgSrc = 'https://i1.sndcdn.com/avatars-000284687259-vg7rsa-t200x200.jpg';
 
+// MusicControl.setNowPlaying({
+//     title: player.name,
+//     artist: 'Poetkoe',
+//     duration: player.duration,
+//     artwork: (player.imgSrc !== null) ? player.imgSrc : '' 
+// })
 
-const MiniPlayerContainer = ({ stop, pause, play, player }) => {
+const MiniPlayerContainer = ({ pause, play, player, currentTime, updateCurrentTime, updateDuration, initiateMusicControl }) => {
+
+    
+    const os = Platform.OS;
+
+    
+    const renderVideo = () => {
+        if (player.sourceFile) {
+
+            return (
+                <Video 
+                    
+                    source={
+                        (os === 'ios') ? 
+                        { uri: player.sourceFile + '.mp3' }:    // ios wants the file extensions
+                        { uri: player.sourceFile }              // android does not
+                    }
+                    ref={ref => this.audio = ref}
+                    volume={1}
+                    
+                    paused={player.playstate !== 'PLAYING'}
+                    onLoad={(params) => {
+                        updateDuration(params.duration)
+                    }}
+                    onEnd={() => {}}
+                    repeat={false}
+                    playInBackground={true}
+                    onProgress={(params) => updateCurrentTime(params.currentTime)}
+                />
+            )
+        }
+    }
+
+
+
+    if (player.name && player.duration > 1 && !player.musicControlInitiated) {
+        
+        // MusicControl.enableBackgroundMode(true);
+        
+        MusicControl.setNowPlaying({
+            title: player.name,
+            artist: 'Poetkoe',
+            duration: player.duration,
+            artwork: (player.imgSrc !== null) ? player.imgSrc : '' 
+        })
+        
+        initiateMusicControl();
+        
+        MusicControl.updatePlayback({
+            state: MusicControl.STATE_PLAYING,
+            elapsedTime: 0
+        })
+
+    }
+
+    
+    MusicControl.enableControl('play', true);
+    MusicControl.enableControl('pause', true);
+    MusicControl.enableControl('seek', true);
+    MusicControl.enableControl('previousTrack', true);
+    MusicControl.enableControl('nextTrack', true);
+
+    MusicControl.on('play', () => {
+        play();
+        MusicControl.updatePlayback({
+            state: MusicControl.STATE_PLAYING,
+            elapsedTime: Math.floor(currentTime)
+        })
+    });
+    MusicControl.on('pause', () => {
+        pause();
+        MusicControl.updatePlayback({
+            state: MusicControl.STATE_PAUSED,
+            elapsedTime: Math.floor(currentTime)
+        })
+    });
+
 
     return (
         <View style={styles.container}>
@@ -37,7 +125,6 @@ const MiniPlayerContainer = ({ stop, pause, play, player }) => {
                 />
 
                 <MiniPlayerButtons 
-                    stop={stop}
                     pause={pause}
                     play={play}
                     player={player}
@@ -45,9 +132,18 @@ const MiniPlayerContainer = ({ stop, pause, play, player }) => {
 
                 <MiniPlayerProgress 
                     player={player}
+                    currentTime={currentTime}
+                    updateCurrentTime={(newTime) => {
+                        updateCurrentTime(newTime);
+                        if (this.audio) {
+                            this.audio.seek(newTime);
+                        }
+                    }}
                 />
 
             </View>
+
+            {renderVideo()}            
             
         </View>
     )
@@ -79,17 +175,20 @@ const styles = StyleSheet.create({
 
 
 MiniPlayerContainer.propTypes = {
-    stop: PropTypes.func.isRequired
+
 }
 
 const mapStateToProps = state => ({
-    player: state.player
+    player: state.player,
+    currentTime: state.currentTime
 })
 
 const mapDispatchToProps = dispatch => ({
     play: () => dispatch({ type: 'PLAY' }),
-    stop: () => dispatch({ type: 'STOP' }),
     pause: () => dispatch({ type: 'PAUSE' }),
+    updateCurrentTime: (newTime) => dispatch({ type: 'UPDATE_TIME', newTime: newTime }),
+    updateDuration: (duration) => dispatch({ type: 'UPDATE_DURATION', duration: duration }),
+    initiateMusicControl: () => dispatch({ type: 'INITIATE_MUSIC_CONTROL' })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(MiniPlayerContainer);

@@ -27,4 +27,6 @@ class ReduxExampleApp extends Component {
 
 AppRegistry.registerComponent('SimpleMusicPlayer', () => ReduxExampleApp);
 
+console.disableYellowBox = true;
+
 export default ReduxExampleApp;

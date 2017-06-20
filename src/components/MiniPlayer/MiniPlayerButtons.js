@@ -7,66 +7,62 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
-export const MiniPlayerButtons = ({ stop, pause, play, player }) => (
+export const MiniPlayerButtons = ({ pause, play, player }) => (
     <View style={styles.container}>
+
+        {/* BACK BUTTON */}
+        <TouchableHighlight
+            underlayColor="rgba(0,0,0,0)"
+            onPress={() => {
+                {/*player.playstate === 'PLAYING' ? pause() : play();*/}
+            }}
+            style={styles.button}
+        >
+            
+            <Icon name="step-backward" size={20} color='grey' />
+            
+        </TouchableHighlight>     
         
+
+        {/* PLAY/PAUSE BUTTON*/}
         <TouchableHighlight
             underlayColor="rgba(0,0,0,0)"
             onPress={() => {
-                if (player.track) {
-                    player.track.stop();
-                    stop();
-                }
+                player.playstate === 'PLAYING' ? pause() : play();
             }}
             style={styles.button}
         >
             
-            <Icon name="stop" size={20} color='grey' />
+            {player.playstate === 'PLAYING' ?
+                <Icon name="pause" size={35} color='grey' /> :
+                <Icon name="play" size={35} color='grey' />
+            }
+            
+        </TouchableHighlight>     
 
-        </TouchableHighlight>
 
+        {/* FORWARD BUTTON */}
         <TouchableHighlight
             underlayColor="rgba(0,0,0,0)"
             onPress={() => {
-                if (player.track) {
-                    player.track.play();
-                    play();
-                }
+                {/*player.playstate === 'PLAYING' ? pause() : play();*/}
             }}
             style={styles.button}
         >
             
-            <Icon name="play" size={35} color='grey' />
-
-        </TouchableHighlight>
-
-
-
-        <TouchableHighlight
-            underlayColor="rgba(0,0,0,0)"
-            onPress={() => {
-                if (player.track) {
-                    player.track.pause();
-                    pause();
-                }
-            }}
-            style={styles.button}
-        >
+            <Icon name="step-forward" size={20} color='grey' />
             
-            <Icon name="pause" size={20} color='grey' />
-
-        </TouchableHighlight>        
+        </TouchableHighlight>     
 
     </View>
 )
+
 
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: 'white'
-
     },
     button: {
         marginLeft: 20,

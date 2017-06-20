@@ -1,7 +1,5 @@
 TODOS:
 
-* Player logic
-    * Where to initiate the player?
 
 * How to manage player state?
 
@@ -14,7 +12,13 @@ TODOS:
 * Play queue
     * Skipping tracks
 
+* Fix progress bar glitch (jumps when dragging)
+
+* Track listing as a ListView -> scrolling enabled
+
 
 
 DONES:
 
+* Player logic
+    * Where to initiate the player?

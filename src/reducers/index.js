@@ -33,11 +33,13 @@ const PAUSED = 'PAUSED';
 const PLAYING = 'PLAYING';
 
 const initPlayingTrack = {
-    track: null, // the Sound object
+    // track: null, // the Sound object
     name: null,
     sourceFile: null,
     imgSrc: null,
-    playstate: null
+    playstate: null,
+    duration: 1, // avoid dividing by zero
+    musicControlInitiated: false
 }
 
 export const player = (state = initPlayingTrack, action) => {
@@ -45,31 +47,48 @@ export const player = (state = initPlayingTrack, action) => {
     switch (action.type) {
 
         case 'SET_PLAYING_TRACK':
-            return {...action.newPlayingTrack, playstate: 'STOPPED'};
+            return {...action.newPlayingTrack, playstate: 'PLAYING'};
 
         case 'GET_PLAYING_TRACK':
             return state;
 
+        case 'UPDATE_DURATION':
+            return {...state, duration: action.duration};
+
 
         case 'PLAY':
-            if (state.track) {
-                return {...state, playstate: PLAYING};
-            }
-            return state;
+            // if (state.track) {
+            //     return {...state, playstate: PLAYING};
+            // }
+            // return state;
+
+            // TESTING
+            return {...state, playstate: PLAYING};
 
         case 'PAUSE':
-            if (state.track) {
-                return {...state, playstate: PAUSED};
-            }
-            return state;
+            // if (state.track) {
+            //     return {...state, playstate: PAUSED};
+            // }
+            // return state;
 
-        case 'STOP':
-            if (state.track) {
-                return {...state, playstate: STOPPED};
-            }
-            return state;
+            // TESTING
+            return {...state, playstate: PAUSED};
+
+        case 'INITIATE_MUSIC_CONTROL':
+            return {...state, musicControlInitiated: true};
 
         default:
+            return state;
+    }
+}
+
+export const currentTime = (state = 0, action) => {
+    switch (action.type) {
+        case 'UPDATE_TIME':
+            return action.newTime;
+        case 'GET_TIME':
+            return state;
+        default: 
             return state;
     }
 }
@@ -95,7 +114,8 @@ const AppReducer = combineReducers({
     nav,
     player,
     allTracks,
-    previewTrack
+    previewTrack,
+    currentTime
 });
 
 export default AppReducer;

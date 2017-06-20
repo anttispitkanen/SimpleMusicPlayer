@@ -12,7 +12,8 @@ import { NavigationActions } from 'react-navigation';
 
 
 const ListSingleTrack = ({ name, sourceFile, imgSrc, play, openPlayer }) => (
-    <TouchableHighlight 
+    <TouchableHighlight
+        underlayColor="rgba(0,0,0,0.1)"
         onPress={() => openPlayer({name, sourceFile, imgSrc})}
         style={styles.container}>
         
@@ -26,7 +27,7 @@ const ListSingleTrack = ({ name, sourceFile, imgSrc, play, openPlayer }) => (
 
 const styles = StyleSheet.create({
     container: {
-        margin: 1,
+        // margin: 1,
         borderBottomWidth: 1,
         borderBottomColor: 'rgba(0,0,0,0.1)'
     },

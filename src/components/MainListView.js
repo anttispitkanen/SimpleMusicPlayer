@@ -9,7 +9,7 @@ import MiniPlayerContainer from './MiniPlayer/MiniPlayerContainer';
 
 const MainListView = ({ tracks, nowPlaying }) => (
     <View style={styles.container}>
-        {/*<Text style={styles.heading}>Poetkoe player</Text>*/}
+
         <View style={styles.logoContainer}>
             <Image source={require('../../static/images/poetkoe-logo.png')} style={styles.mainLogo} />
         </View>
@@ -55,7 +55,6 @@ const styles = StyleSheet.create({
     mainLogo: {
         marginTop: 10,
         height: 60,
-        // width: 100,
         resizeMode: 'contain'
     }
 });
